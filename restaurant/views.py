@@ -5,6 +5,7 @@ from .serializers import MenuSerializer
 from rest_framework import generics, viewsets
 from .models import Menu, Booking
 from .serializers import MenuSerializer, BookingSerializer
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -25,5 +26,8 @@ class SingleMenuItemView(generics.RetrieveUpdateAPIView, generics.DestroyAPIView
     serializer_class = MenuSerializer
 
 class BookingViewSet(viewsets.ModelViewSet):
+    # This line completely locks the endpoint!
+    permission_classes = [IsAuthenticated]  
+    
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
